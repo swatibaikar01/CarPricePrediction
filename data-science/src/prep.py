@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data", type=str, help="Path to input data")
+    parser.add_argument("--raw_data", type=str, help="Path to input data")
     parser.add_argument("--test_train_ratio", type=float, default=0.2)
     parser.add_argument("--train_data", type=str, help="Path to save train data")
     parser.add_argument("--test_data", type=str, help="Path to save test data")
@@ -18,11 +18,11 @@ def main():
     mlflow.start_run()
 
     # Log arguments
-    logging.info(f"Input data path: {args.data}")
+    logging.info(f"Input data path: {args.raw_data}")
     logging.info(f"Test-train ratio: {args.test_train_ratio}")
 
     # Reading Data
-    df = pd.read_csv(args.data)
+    df = pd.read_csv(args.raw_data)
 
     # Encode categorical feature
     # Ensure 'Segment' column exists before encoding
