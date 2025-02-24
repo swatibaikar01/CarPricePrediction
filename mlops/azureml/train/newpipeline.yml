@@ -5,7 +5,7 @@ experiment_name: car-priceprediction-experiment  # Provide the experiment name
 description: car-price-prediction-pipeline-desc  # Provide the description for the pipeline
 
 inputs:
-  raw_data:
+  data:
     type: uri_file
     path: azureml:used-cars-data@latest
 
