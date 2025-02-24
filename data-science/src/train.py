@@ -32,8 +32,8 @@ def main(args):
     '''Read train and test datasets, train model, evaluate model, save trained model'''
 
     # Read train and test data from _______
-    train_df = pd.read_csv(Path(args.train_data) / "train_data.csv")
-    test_df = pd.read_csv(Path(args.test_data) / "test_data.csv")
+    train_df = pd.read_csv(Path(args.train_data)/"train_data.csv")
+    test_df = pd.read_csv(Path(args.test_data)/"test_data.csv")
 
     # Split the data into ______(X) and ______(y) 
     y_train = train_df['price']  # Specify the target column
