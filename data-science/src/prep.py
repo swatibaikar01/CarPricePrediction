@@ -1,11 +1,11 @@
-import os
 import argparse
-import logging
-import mlflow
-import pandas as pd
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
 from pathlib import Path
+import os
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+import mlflow
+import logging
 
 def parse_args():
     '''Parse input arguments'''
@@ -18,7 +18,7 @@ def parse_args():
     args = parser.parse_args()
 
     return args
-    
+
 def main(args):
     '''Read, split, and save datasets'''
 
@@ -29,19 +29,33 @@ def main(args):
     df['Segment'] = le.fit_transform(df['Segment'])
 
     # Split Data into train and test datasets
-    train_df, test_df = train_test_split(df, test_size=args.test_train_ratio, random_state=42)  #  Write code to split the data into train and test datasets
+    train_df, test_df = train_test_split(df, test_size=args.test_train_ratio, random_state=42)
 
     # Save train and test data
-    os.makedirs(args.train_data, exist_ok=True)  # Create directories for train_data and test_data
-    os.makedirs(args.test_data, exist_ok=True)  # Create directories for train_data and test_data
-    train_df.to_csv(os.path.join(args.train_data, "train_data.csv"), index=False)  # Specify the name of the train data file
-    test_df.to_csv(os.path.join(args.test_data, "test_data.csv"), index=False)  # Specify the name of the test data file
+    os.makedirs(args.train_data, exist_ok=True)
+    os.makedirs(args.test_data, exist_ok=True)
+    train_df.to_csv(os.path.join(args.train_data, "train.csv"), index=False)
+    test_df.to_csv(os.path.join(args.test_data, "test.csv"), index=False)
 
-    # log the metrics
-    mlflow.log_metric('train size', train_df.shape[0])  # Log the train dataset size
-    mlflow.log_metric('test size', test_df.shape[0])  # Log the test dataset size
-    
-    mlflow.end_run()
+    # Log the metrics
+    mlflow.log_metric('train size', train_df.shape[0])
+    mlflow.log_metric('test size', test_df.shape[0])
 
 if __name__ == "__main__":
-    main()
+    mlflow.start_run()
+
+    # Parse Arguments
+    args = parse_args()
+
+    lines = [
+        f"Raw data path: {args.raw_data}",
+        f"Train dataset output path: {args.train_data}",
+        f"Test dataset path: {args.test_data}",
+        f"Test-train ratio: {args.test_train_ratio}",
+    ]
+
+    for line in lines:
+        print(line)
+    
+    main(args)
+    mlflow.end_run()
