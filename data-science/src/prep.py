@@ -34,8 +34,8 @@ def main(args):
     # Save train and test data
     os.makedirs(args.train_data, exist_ok=True)
     os.makedirs(args.test_data, exist_ok=True)
-    train_df.to_csv(os.path.join(args.train_data, "train.csv"), index=False)
-    test_df.to_csv(os.path.join(args.test_data, "test.csv"), index=False)
+    train_df.to_csv(os.path.join(args.train_data, "train_data.csv"), index=False)
+    test_df.to_csv(os.path.join(args.test_data, "test_data.csv"), index=False)
 
     # Log the metrics
     mlflow.log_metric('train size', train_df.shape[0])
